@@ -1,0 +1,56 @@
+
+openapi: "3.0.0"
+info:
+  title: E-commerce API
+  version: "1.0.0"
+  description: API de gerenciamento de produtos no e-commerce.
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /api/products:
+    get:
+      summary: Lista todos os produtos
+      tags: [Products]
+      responses:
+        "200":
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /api/products/add:
+    post:
+      summary: Adiciona um novo produto
+      tags: [Products]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "200":
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /api/products/{product_id}:
+    get:
+      summary: Busca um produto pelo ID
+      tags: [Products]
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
